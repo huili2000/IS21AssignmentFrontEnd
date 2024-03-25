@@ -84,8 +84,8 @@ const StickyBoard = (props) => {
     })}, [refresh])
     
     //Click to delete or add paints 
-    function onButtonClick (action) {
-        if ("takeAway" === action) {
+    function onButtonClickDelete () {
+        
             fetch("https://is21assignmentbe-ikc6zntdbq-wn.a.run.app/paints/consume", {
             method: "PUT",
             headers: {
@@ -103,10 +103,12 @@ const StickyBoard = (props) => {
             }
             })
             .catch (error => console.error(error))
-        }
+        
+    }
 
+    function onButtonClickAdd () {
         // fill in stock
-        if ("fillInStock" === action) {
+        
             fetch("https://is21assignmentbe-ikc6zntdbq-wn.a.run.app/paints/provision", {
                 method: "PUT",
                 headers: {
@@ -123,8 +125,8 @@ const StickyBoard = (props) => {
                 }
             })
             .catch (error => console.error(error))
-        }
-        alert ("Please confirm you will update:" + " paint color: " + color)
+        
+        //alert ("Please confirm you will update:" + " paint color: " + color)
         setSelectVariable("")
         setRefresh(refresh + 1);
     }
@@ -176,7 +178,7 @@ if (props.permission === "view and edit") {
              <input
                 className={"inputButton"}
                 type="button"
-                onClick= {() => onButtonClick ('takeAway')}
+                onClick= {() => onButtonClickDelete ('takeAway')}
                 value={"Consume Paints from Stocks"} />
             
             <div className={"space"}/>
@@ -184,7 +186,7 @@ if (props.permission === "view and edit") {
             <input
                 value={takeAwayNumber}
                 placeholder="Enter your take away here"
-                onChange={ev => setQuantity(ev.target.value)}
+                onChange={ev => setQuantity(Number(ev.target.value))}
                 className={"inputBox"} />
             
             <PaintDropdwon setColor={setColor}/>
@@ -195,7 +197,7 @@ if (props.permission === "view and edit") {
             <input
                 className={"inputButton"}
                 type="button"
-                onClick= {() => onButtonClick ("fillInStock")}
+                onClick= {() => onButtonClickAdd ("fillInStock")}
                 value={"Add Piants Into Stocks"} />
 
             <div className={"space"}/>
@@ -203,7 +205,7 @@ if (props.permission === "view and edit") {
             <input
                 value={fillInNumber}
                 placeholder="Enter your fill in number"
-                onChange={ev => setQuantity(ev.target.value)}
+                onChange={ev => setQuantity(Number(ev.target.value))}
                 className={"inputBox"}/>
         
             <PaintDropdwon setColor={setColor}/>
@@ -256,11 +258,12 @@ if (props.permission === "view and edit") {
         </div>
         <br />
      
+        // on buttons
         <div className={"inputContainerRow"}>
              <input
                 className={"inputButton"}
                 type="button"
-                onClick= {() => onButtonClick ('takeAway')}
+                onClick= {() => onButtonClickDelete ()}
                 value={"Consume Paints"} />
             
             <div className={"space"}/>
@@ -268,7 +271,7 @@ if (props.permission === "view and edit") {
             <input
                 value={takeAwayNumber}
                 placeholder="Enter your take away here"
-                onChange={ev => setTakeAwayNumber(ev.target.value)}
+                onChange={ev => setQuantity(ev.target.value)}
                 className={"inputBox"} />
             
             <PaintDropdwon setColor={setColor}/>
@@ -283,7 +286,7 @@ if (props.permission === "view and edit") {
                  <input
                     className={"inputButton"}
                     type="button"
-                    onClick= {() => onButtonClick ('takeAway')}
+                    onClick= {() => onButtonClickDelete ()}
                     value={"Consume Paints"} />
             
                 <div className={"space"}/>
@@ -291,7 +294,7 @@ if (props.permission === "view and edit") {
                 <input
                     value={takeAwayNumber}
                     placeholder="Enter your take away here"
-                    onChange={ev => setTakeAwayNumber(ev.target.value)}
+                    onChange={ev => setQuantity(ev.target.value)}
                     className={"inputBox"} />
             </div>
         
@@ -300,7 +303,7 @@ if (props.permission === "view and edit") {
                 <input
                     className={"inputButton"}
                     type="button"
-                    onClick= {() => onButtonClick ("fillInStock")}
+                    onClick= {() => onButtonClickAdd ()}
                     value={"Add Pain in Stocks"} />
 
                 <div className={"space"}/>
@@ -308,7 +311,7 @@ if (props.permission === "view and edit") {
                 <input
                     value={fillInNumber}
                     placeholder="Enter your fill in number"
-                    onChange={ev => setFillInNumber(ev.target.value)}
+                    onChange={ev => setQuantity(ev.target.value)}
                     className={"inputBox"}/>
             </div>
         </>
